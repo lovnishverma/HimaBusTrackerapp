@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HimaBusTracker</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/select2.min.css">
+  <link rel="icon" href="favicon-16x16.png" type="image/x-icon" />
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      color: #343a40;
+    }
+
+    .container {
+      margin-top: 50px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+    }
+
+    h3 {
+      color: #007bff;
+    }
+
+    .search-form {
+      margin-top: 20px;
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    #bus-table {
+      margin-top: 20px;
+    }
+
+    #result {
+      margin-top: 10px;
+    }
+
+    .footer {
+      margin-top: 50px;
+      background-color: #343a40;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      padding: 20px 0;
+      border-radius: 5px;
+      color: #fff;
+    }
+
+    .social-icon {
+      margin-right: 5px;
+      color: #007bff;
+    }
+
+    select.form-select {
+      color: #000;
+    }
+
+    select.form-select option:checked {
+      background-color: #e2e3e5;
+      color: #000;
+    }
+    
+    .form-select {
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      padding: 6px 12px;
+    }
+
+@media (max-width: 576px) {
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+}
+
+    @media (min-width: 768px) {
+      .container {
+        margin-top: 50px;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .search-form {
+        margin-top: 40px;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        margin-top: 20px;
+      }
+
+      #bus-table {
+        margin-top: 40px;
+      }
+
+      #result {
+        margin-top: 20px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .container {
+        margin-top: 70px;
+      }
+
+      .search-form {
+        margin-top: 50px;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        margin-top: 30px;
+      }
+
+      #bus-table {
+        margin-top: 50px;
+      }
+
+      #result {
+        margin-top: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3 class="mb-4 text-center"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 128 128">
+	<g fill="#2f2f2f">
+		<path d="M117.13 87.29c0 7.35-2.06 13.3-4.58 13.3c-2.53 0-4.58-5.95-4.58-13.3s2.05-13.31 4.58-13.31c2.52 0 4.58 5.97 4.58 13.31" />
+		<path d="M110.56 99.28s1.22 1.95 2.54 2.61c2.99 1.49 7.15.94 9.65-2.46l-1.34-8.1l-8.46 1.61z" />
+	</g>
+	<g fill="#2f2f2f">
+		<path d="M23.71 104.14c0 7.85-2.77 14.22-6.17 14.22c-3.41 0-6.18-6.37-6.18-14.22c0-7.86 2.77-14.23 6.18-14.23c3.4.01 6.17 6.37 6.17 14.23" />
+		<path d="M14.85 116.97s1.64 2.09 3.44 2.79c4.03 1.59 9.63 1 13-2.62l-1.81-8.66l-11.4 1.72z" />
+		<path d="M34.95 104.14c0 7.85-2.77 14.22-6.17 14.22c-3.41 0-6.18-6.37-6.18-14.22c0-7.86 2.77-14.23 6.18-14.23c3.4.01 6.17 6.37 6.17 14.23" />
+	</g>
+	<g fill="#2f2f2f">
+		<path d="M90.78 104.14c0 7.85-2.77 14.22-6.17 14.22c-3.41 0-6.18-6.37-6.18-14.22c0-7.86 2.77-14.23 6.18-14.23c3.4.01 6.17 6.37 6.17 14.23" />
+		<path d="M81.92 116.97s1.64 2.09 3.44 2.79c4.03 1.59 9.63 1 13.01-2.62l-1.81-8.66l-11.4 1.72z" />
+	</g>
+	<defs>
+		<path id="notoV1Bus0" d="M114 12.21H17.31C7.28 12.21.16 18.34.16 27.36V91.7c0 10.02 8.13 18.15 18.15 18.15h55.67c14.62 0 19.4-1.89 28.34-7.78C111.51 96.02 128 86.02 128 77.82V27.27c0-10.02-3.98-15.06-14-15.06" />
+	</defs>
+	<use fill="#fcc21b" href="#notoV1Bus0" />
+	<clipPath id="notoV1Bus1">
+		<use href="#notoV1Bus0" />
+	</clipPath>
+	<path fill="#ed6c30" d="M-.38 82.07h86.33v29.43H-.38zm86.33 35.52l45.37-29.65V54.85L85.95 82.07z" clip-path="url(#notoV1Bus1)" />
+	<defs>
+		<path id="notoV1Bus2" d="M80.11 67.23c0 3.36-2.73 6.1-6.1 6.1h-58.6c-3.36 0-6.09-2.74-6.09-6.1V28.49c0-3.36 2.73-6.1 6.09-6.1H74c3.37 0 6.1 2.74 6.1 6.1v38.74z" />
+	</defs>
+	<use fill="#40c0e7" href="#notoV1Bus2" />
+	<clipPath id="notoV1Bus3">
+		<use href="#notoV1Bus2" />
+	</clipPath>
+	<path fill="#2f2f2f" d="M6.61 20.04h77v17.88h-77z" clip-path="url(#notoV1Bus3)" />
+	<path fill="#fff" d="M20.24 25.96h49.73v8.1H20.24z" clip-path="url(#notoV1Bus3)" />
+	<path fill="#40c0e7" d="M108.42 48.97c0 2.6-1.52 5.56-3.51 6.69l-7.41 4.21c-2.74 1.54-5.13.17-5.13-3.2V29.25c0-3.36 2.4-6.09 5.13-6.09h7.41c1.99 0 3.51 2.11 3.51 4.69zm11.92-22.19c0-1.97-.73-3.57-1.67-3.57h-3.34c-1.16 0-2.16 1.91-2.16 4.25v19.06c0 2.34 1 3.64 2.16 2.91l3.34-2.04c.94-.58 1.67-2.62 1.67-4.59z" />
+	<ellipse cx="16.08" cy="93.96" fill="#fff" rx="6.87" ry="6.86" />
+	<path fill="#fff" d="M79.13 93.96c0 3.79-3.08 6.86-6.88 6.86c-3.78 0-6.86-3.07-6.86-6.86c0-3.8 3.07-6.86 6.86-6.86c3.8 0 6.88 3.06 6.88 6.86" />
+	<path fill="#2f2f2f" d="M102.02 104.14c0 7.85-2.77 14.22-6.17 14.22c-3.41 0-6.18-6.37-6.18-14.22c0-7.86 2.77-14.23 6.18-14.23c3.4.01 6.17 6.37 6.17 14.23m23.44-16.85c0 7.35-2.05 13.3-4.58 13.3c-2.53 0-4.58-5.95-4.58-13.3s2.05-13.31 4.58-13.31c2.54 0 4.58 5.97 4.58 13.31" />
+</svg> HimaBusTracker <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+	<path fill="currentColor" d="M14 12h1.5v2.82l2.44 1.41l-.75 1.3L14 15.69zM4 2h14a2 2 0 0 1 2 2v6.1c1.24 1.26 2 2.99 2 4.9a7 7 0 0 1-7 7c-1.91 0-3.64-.76-4.9-2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m0 13v3h4.67c-.43-.91-.67-1.93-.67-3zm0-7h6V5H4zm14 0V5h-6v3zM4 13h4.29c.34-1.15.97-2.18 1.81-3H4zm11-2.85A4.85 4.85 0 0 0 10.15 15c0 2.68 2.17 4.85 4.85 4.85A4.85 4.85 0 0 0 19.85 15c0-2.68-2.17-4.85-4.85-4.85" />
+</svg></h3>
+    <div class="search-form">
+      <div class="row">
+        <div class="col-md-6">
+          <label for="source" class="form-label">Source Station: <svg xmlns="http://www.w3.org/2000/svg" width="0.88em" height="1em" viewBox="0 0 448 512">
+	<path fill="currentColor" d="M427.2 203c0-112.1-90.9-203-203-203C112.1-.2 21.2 90.6 21 202.6A202.86 202.86 0 0 0 161.5 396v101.7a14.3 14.3 0 0 0 14.3 14.3h96.4a14.3 14.3 0 0 0 14.3-14.3V396.1A203.18 203.18 0 0 0 427.2 203m-271.6 0c0-90.8 137.3-90.8 137.3 0c-.1 89.9-137.3 91-137.3 0" />
+</svg></label>
+          <select id="source" class="form-select" onchange="searchBuses(); hideOptions(this);">
+            <option value="" disabled selected>Select or Type Source Station</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="destination" class="form-label">Destination Station: <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 14 14">
+	<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M2.5.5v13m0-13l9 4.5l-9 4.5" />
+</svg></label>
+          <select id="destination" class="form-select" onchange="searchBuses(); hideOptions(this);">
+            <option value="" disabled selected>Select or Type Destination Station</option>
+          </select>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <button type="button" class="btn btn-primary w-100" onclick="searchBus()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
+              <g fill="none" stroke-linejoin="round" stroke-width="4">
+                <path fill="#2F88FF" stroke="#000" d="M21 38C30.3888 38 38 30.3888 38 21C38 11.6112 30.3888 4 21 4C11.6112 4 4 11.6112 4 21C4 30.3888 11.6112 38 21 38Z" />
+                <path stroke="#fff" stroke-linecap="round" d="M26.657 14.3431C25.2093 12.8954 23.2093 12 21.0001 12C18.791 12 16.791 12.8954 15.3433 14.3431" />
+                <path stroke="#000" stroke-linecap="round" d="M33.2216 33.2217L41.7069 41.707" />
+              </g>
+            </svg> Search
+          </button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-secondary w-100" onclick="swapStations()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
+	<g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
+		<path fill="#2F88FF" stroke="#000" d="M39 6H9C7.34315 6 6 7.34315 6 9V39C6 40.6569 7.34315 42 9 42H39C40.6569 42 42 40.6569 42 39V9C42 7.34315 40.6569 6 39 6Z" />
+		<path stroke="#fff" d="M15 21L33 21" />
+		<path stroke="#fff" d="M15 27L33 27" />
+		<path stroke="#fff" d="M33 21L26 14" />
+		<path stroke="#fff" d="M22 34L15 27" />
+	</g>
+</svg> Swap Stations
+          </button>
+        </div>
+      </div>
+    </div>
+<div class="disclaimer mt-4">
+ <center> <p class="text-muted small">
+    Your Privacy Matters: Read our Privacy Policy to understand how we safeguard your information and prioritize your online security <a href="privacy_policy.html" target="_blank">Privacy Policy</a>.
+  </p></center>
+</div>
+
+    </div>
+    <div class="table-container mt-4">
+      <table id="bus-table" class="table table-bordered"></table>
+      <div id="result" class="mt-3"></div>
+    </div>
+  </div>
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <a href="https://www.instagram.com/lovnish.tech" target="_blank" class="text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
+	<g fill="none">
+		<rect width="256" height="256" fill="url(#skillIconsInstagram0)" rx="60" />
+		<rect width="256" height="256" fill="url(#skillIconsInstagram1)" rx="60" />
+		<path fill="#fff" d="M128.009 28c-27.158 0-30.567.119-41.233.604c-10.646.488-17.913 2.173-24.271 4.646c-6.578 2.554-12.157 5.971-17.715 11.531c-5.563 5.559-8.98 11.138-11.542 17.713c-2.48 6.36-4.167 13.63-4.646 24.271c-.477 10.667-.602 14.077-.602 41.236s.12 30.557.604 41.223c.49 10.646 2.175 17.913 4.646 24.271c2.556 6.578 5.973 12.157 11.533 17.715c5.557 5.563 11.136 8.988 17.709 11.542c6.363 2.473 13.631 4.158 24.275 4.646c10.667.485 14.073.604 41.23.604c27.161 0 30.559-.119 41.225-.604c10.646-.488 17.921-2.173 24.284-4.646c6.575-2.554 12.146-5.979 17.702-11.542c5.563-5.558 8.979-11.137 11.542-17.712c2.458-6.361 4.146-13.63 4.646-24.272c.479-10.666.604-14.066.604-41.225s-.125-30.567-.604-41.234c-.5-10.646-2.188-17.912-4.646-24.27c-2.563-6.578-5.979-12.157-11.542-17.716c-5.562-5.562-11.125-8.979-17.708-11.53c-6.375-2.474-13.646-4.16-24.292-4.647c-10.667-.485-14.063-.604-41.23-.604zm-8.971 18.021c2.663-.004 5.634 0 8.971 0c26.701 0 29.865.096 40.409.575c9.75.446 15.042 2.075 18.567 3.444c4.667 1.812 7.994 3.979 11.492 7.48c3.5 3.5 5.666 6.833 7.483 11.5c1.369 3.52 3 8.812 3.444 18.562c.479 10.542.583 13.708.583 40.396c0 26.688-.104 29.855-.583 40.396c-.446 9.75-2.075 15.042-3.444 18.563c-1.812 4.667-3.983 7.99-7.483 11.488c-3.5 3.5-6.823 5.666-11.492 7.479c-3.521 1.375-8.817 3-18.567 3.446c-10.542.479-13.708.583-40.409.583c-26.702 0-29.867-.104-40.408-.583c-9.75-.45-15.042-2.079-18.57-3.448c-4.666-1.813-8-3.979-11.5-7.479s-5.666-6.825-7.483-11.494c-1.369-3.521-3-8.813-3.444-18.563c-.479-10.542-.575-13.708-.575-40.413c0-26.704.096-29.854.575-40.396c.446-9.75 2.075-15.042 3.444-18.567c1.813-4.667 3.983-8 7.484-11.5c3.5-3.5 6.833-5.667 11.5-7.483c3.525-1.375 8.819-3 18.569-3.448c9.225-.417 12.8-.542 31.437-.563zm62.351 16.604c-6.625 0-12 5.37-12 11.996c0 6.625 5.375 12 12 12s12-5.375 12-12s-5.375-12-12-12zm-53.38 14.021c-28.36 0-51.354 22.994-51.354 51.355c0 28.361 22.994 51.344 51.354 51.344c28.361 0 51.347-22.983 51.347-51.344c0-28.36-22.988-51.355-51.349-51.355zm0 18.021c18.409 0 33.334 14.923 33.334 33.334c0 18.409-14.925 33.334-33.334 33.334c-18.41 0-33.333-14.925-33.333-33.334c0-18.411 14.923-33.334 33.333-33.334" />
+		<defs>
+			<radialGradient id="skillIconsInstagram0" cx="0" cy="0" r="1" gradientTransform="matrix(0 -253.715 235.975 0 68 275.717)" gradientUnits="userSpaceOnUse">
+				<stop stop-color="#FD5" />
+				<stop offset=".1" stop-color="#FD5" />
+				<stop offset=".5" stop-color="#FF543E" />
+				<stop offset="1" stop-color="#C837AB" />
+			</radialGradient>
+			<radialGradient id="skillIconsInstagram1" cx="0" cy="0" r="1" gradientTransform="matrix(22.25952 111.2061 -458.39518 91.75449 -42.881 18.441)" gradientUnits="userSpaceOnUse">
+				<stop stop-color="#3771C8" />
+				<stop offset=".128" stop-color="#3771C8" />
+				<stop offset="1" stop-color="#60F" stop-opacity="0" />
+			</radialGradient>
+		</defs>
+	</g>
+</svg><b style="color:hotpink;"> Instagram </b>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="https://www.facebook.com/lovnishverma.tech" target="_blank" class="text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 128 128">
+	<rect width="118.35" height="118.35" x="4.83" y="4.83" fill="#3d5a98" rx="6.53" ry="6.53" />
+	<path fill="#fff" d="M86.48 123.17V77.34h15.38l2.3-17.86H86.48v-11.4c0-5.17 1.44-8.7 8.85-8.7h9.46v-16A126.56 126.56 0 0 0 91 22.7c-13.62 0-23 8.3-23 23.61v13.17H52.62v17.86H68v45.83z" />
+</svg><b style="color:blue;"> Facebook</b>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="mailto:princelv84@gmail.com" target="_blank" class="text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48">
+	<g fill="none" stroke-width="4">
+		<path stroke="#000" stroke-linecap="round" stroke-linejoin="round" d="M44 35V9H24H4V23V37H26" />
+		<circle cx="35" cy="35" r="9" fill="#2F88FF" stroke="#000" />
+		<path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M37 33L33 37" />
+		<path stroke="#000" stroke-linecap="round" stroke-linejoin="round" d="M4 9L24 22L44 9" />
+	</g>
+</svg><b style="color:#007bff;"> Email: princelv84@gmail.com</b> 
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="js/jquery-3.6.4.min.js"></script>
+  <script src="js/select2.min.js"></script>
+  <script src="js/script.js"></script>
+
+ <script>
+  $(document).ready(function () {
+    $('#source, #destination').select2({
+      placeholder: "Type or Select Source Station"
+    });
+
+    $('#source, #destination').on('change', function (e) {
+      $(this).select2('close').trigger('select', { originalEvent: e });
+    });
+  });
+</script>
+</body>
+</html>
