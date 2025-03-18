@@ -1,6 +1,6 @@
 # HimaBusTracker
 
-[HimaBusTracker](https://www.amazon.com/Apps-Games-Lovnish-Verma/s?rh=n%3A2350149011%2Cp_4%3ALovnish%2BVerma)
+App Link Download Now: [HimaBusTracker](https://www.amazon.com/Apps-Games-Lovnish-Verma/s?rh=n%3A2350149011%2Cp_4%3ALovnish%2BVerma)
 
 HimaBusTracker is a user-friendly mobile application designed to provide stress-free travel in Himachal Pradesh. Access bus schedules, routes, and essential information with ease. The app is ad-free and offers offline access to bus timings and routes.
 
